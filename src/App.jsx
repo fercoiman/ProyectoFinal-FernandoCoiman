@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import ProductList from "./components/ProductList";
 import Cart from "./components/Cart";
+import ProductoFormulario from "./components/ProductoFormulario";
 
 function App() {
   const [carrito, setCarrito] = useState([]);
+  const [productosPersonalizados, setProductosPersonalizados] = useState([]);
 
   const agregarAlCarrito = (producto) => {
     setCarrito(prev => {
@@ -20,13 +22,25 @@ function App() {
     setCarrito(prev => prev.filter(p => p.id !== id));
   };
 
+  const agregarProductoPersonalizado = (producto) => {
+    setProductosPersonalizados(prev => [...prev, producto]);
+  };
+
   return (
     <div style={{ padding: "2rem" }}>
-      <h1>Tienda React - FakeStore API</h1>
-      <ProductList onAdd={agregarAlCarrito} />
+      <h1>Tienda React - FakeStore API + Personalizados</h1>
+
+      <ProductoFormulario onAddProductoPersonalizado={agregarProductoPersonalizado} />
+
+      <ProductList
+        onAdd={agregarAlCarrito}
+        productosExtras={productosPersonalizados}
+      />
+
       <Cart cartItems={carrito} onRemove={eliminarDelCarrito} />
     </div>
   );
 }
 
 export default App;
+
