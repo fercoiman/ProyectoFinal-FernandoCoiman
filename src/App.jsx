@@ -27,8 +27,9 @@ function App() {
   };
 
   return (
-    <div style={{ padding: "2rem" }}>
-      <h1>Tienda React - FakeStore API + Personalizados</h1>
+    //<div style={{ padding: "2rem" }}>
+    <div className="container py-4">
+      <h1 className="mb-4 text-center">Tienda Talento Tech 2025</h1>
 
       <ProductoFormulario onAddProductoPersonalizado={agregarProductoPersonalizado} />
 
