@@ -32,13 +32,14 @@ function App() {
       <h1 className="mb-4 text-center">Tienda Talento Tech 2025</h1>
 
       <ProductoFormulario onAddProductoPersonalizado={agregarProductoPersonalizado} />
+      <Cart cartItems={carrito} onRemove={eliminarDelCarrito} />
 
       <ProductList
         onAdd={agregarAlCarrito}
         productosExtras={productosPersonalizados}
       />
 
-      <Cart cartItems={carrito} onRemove={eliminarDelCarrito} />
+      
     </div>
   );
 }
