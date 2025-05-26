@@ -1,48 +1,41 @@
-import React, { useState } from "react";
-import ProductList from "./components/ProductList";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { useState } from "react";
+import NavBar from "./components/NavBar";
+import Home from "./components/Home";
+import Novedades from "./components/Novedades";
 import Cart from "./components/Cart";
-import ProductoFormulario from "./components/ProductoFormulario";
+import LoginModal from "./components/LoginModal";
 
 function App() {
-  const [carrito, setCarrito] = useState([]);
-  const [productosPersonalizados, setProductosPersonalizados] = useState([]);
+  const [showLogin, setShowLogin] = useState(false);
+  const [cartItems, setCartItems] = useState([]);
 
-  const agregarAlCarrito = (producto) => {
-    setCarrito(prev => {
-      const existe = prev.find(p => p.id === producto.id);
-      if (existe) {
-        return prev.map(p => p.id === producto.id ? { ...p, qty: p.qty + 1 } : p);
-      } else {
-        return [...prev, { ...producto, qty: 1 }];
-      }
-    });
+  // Agregar producto al carrito
+  const addToCart = (product) => {
+    setCartItems((prevItems) => [...prevItems, product]);
   };
 
-  const eliminarDelCarrito = (id) => {
-    setCarrito(prev => prev.filter(p => p.id !== id));
-  };
-
-  const agregarProductoPersonalizado = (producto) => {
-    setProductosPersonalizados(prev => [...prev, producto]);
+  // Vaciar carrito
+  const clearCart = () => {
+    setCartItems([]);
   };
 
   return (
-    //<div style={{ padding: "2rem" }}>
-    <div className="container py-4">
-      <h1 className="mb-4 text-center">Tienda Talento Tech 2025</h1>
-
-      <ProductoFormulario onAddProductoPersonalizado={agregarProductoPersonalizado} />
-      <Cart cartItems={carrito} onRemove={eliminarDelCarrito} />
-
-      <ProductList
-        onAdd={agregarAlCarrito}
-        productosExtras={productosPersonalizados}
+    <Router>
+      <NavBar
+        onLoginClick={() => setShowLogin(true)}
+        cartCount={cartItems.length}
       />
 
-      
-    </div>
+      <Routes>
+        <Route path="/" element={<Home onAddToCart={addToCart} />} />
+        <Route path="/novedades" element={<Novedades />} />
+        <Route path="/cart" element={<Cart items={cartItems} clearCart={clearCart} />} />
+      </Routes>
+
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+    </Router>
   );
 }
 
 export default App;
-

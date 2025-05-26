@@ -1,26 +1,34 @@
-import React from "react";
-import { Navbar,Nav,Container } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-const Navegacion=()=>{
-    return(
-        <Navbar bg="dark" variant="dark" expand = 'lg'>
-            <Container>
-                <Navbar.Brand as={Link} to="/">Todo por Dos Pesos</Navbar.Brand>
-                <Navbar.Collapse>
-                    <Nav>
-                        <Nav.Link as={Link} to="/">Home</Nav.Link>
-                        <Nav.Link as={Link} to="/about">About</Nav.Link>    
-                        <Nav.Link as={Link} to="/contact">Contact</Nav.Link>
-                    </Nav>
-                </Navbar.Collapse>
+function NavBar({ onLoginClick, cartCount }) {
+  return (
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
+      <Link className="navbar-brand" to="/">Tienda</Link>
 
-            </Container>
+      <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span className="navbar-toggler-icon"></span>
+      </button>
 
-        </Navbar>
-
-
-
-    );
-
+      <div className="collapse navbar-collapse" id="navbarNav">
+        <ul className="navbar-nav me-auto mb-2 mb-lg-0">
+          <li className="nav-item">
+            <Link className="nav-link" to="/">Inicio</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/novedades">Novedades</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/cart">
+              Carrito <span className="badge bg-light text-dark">{cartCount}</span>
+            </Link>
+          </li>
+        </ul>
+        <button className="btn btn-outline-light" onClick={onLoginClick}>
+          Iniciar Sesión
+        </button>
+      </div>
+    </nav>
+  );
 }
+
+export default NavBar;
