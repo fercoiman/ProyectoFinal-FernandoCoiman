@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const ProductoFormulario = ({ onAddProductoPersonalizado }) => {
+const ProductFormModal = ({ onAddProductoPersonalizado }) => {
   const [titulo, setTitulo] = useState("");
   const [precio, setPrecio] = useState("");
   const [imagen, setImagen] = useState("");
@@ -66,5 +66,5 @@ const ProductoFormulario = ({ onAddProductoPersonalizado }) => {
   );
 };
 
-export default ProductoFormulario;
+export default ProductFormModal;
 
