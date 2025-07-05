@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Novedades from "./components/Novedades";
 import Cart from "./components/Cart";
 import LoginModal from "./components/LoginModal";
+import Swal from 'sweetalert2';
 
 function App() {
   const [showLogin, setShowLogin] = useState(false);
@@ -27,12 +28,32 @@ function App() {
     setCartItems([]);
   };
 
-  const handleLogin = (userData) => {
+/*   const handleLogin = (userData) => {
     setUser(userData);
     localStorage.setItem("user", JSON.stringify(userData));
     alert(`Bienvenido, ${userData.email}`);
     setShowLogin(false);
-  };
+  }; */
+
+
+const handleLogin = (userData) => {
+  setUser(userData);
+  localStorage.setItem("user", JSON.stringify(userData));
+
+  Swal.fire({
+    icon: 'success',
+    title: '¡Inicio de sesión exitoso!',
+    text: `Bienvenido, ${userData.email}`,
+    showConfirmButton: false,
+    timer: 2000,
+  });
+
+  setShowLogin(false);
+};
+
+
+
+
 
   const handleLogout = () => {
     setUser(null);
