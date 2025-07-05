@@ -1,9 +1,9 @@
 import { Link } from "react-router-dom";
 
-function NavBar({ onLoginClick, cartCount }) {
+function NavBar({ onLoginClick, onLogoutClick, cartCount, user }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-      <Link className="navbar-brand" to="/">&copy;Tienda Talento 2025 </Link>
+      <Link className="navbar-brand" to="/">&copy;Tienda Talento 2025</Link>
 
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span className="navbar-toggler-icon"></span>
@@ -24,12 +24,23 @@ function NavBar({ onLoginClick, cartCount }) {
             </Link>
           </li>
         </ul>
-        <button className="btn btn-outline-light" onClick={onLoginClick}>
-          Iniciar Sesión
-        </button>
+
+        {user ? (
+          <>
+            <span className="navbar-text me-3 text-light">👤 {user.email}</span>
+            <button className="btn btn-success" onClick={onLogoutClick}>
+              Cerrar Sesión
+            </button>
+          </>
+        ) : (
+          <button className="btn btn-outline-light" onClick={onLoginClick}>
+            Iniciar Sesión
+          </button>
+        )}
       </div>
     </nav>
   );
 }
 
-export default NavBar; 
+export default NavBar;
+
