@@ -9,15 +9,22 @@ import LoginModal from "./components/LoginModal";
 function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [cartItems, setCartItems] = useState([]);
+  const [user, setUser] = useState(null);
 
-  // Agregar producto al carrito
+  
   const addToCart = (product) => {
     setCartItems((prevItems) => [...prevItems, product]);
   };
 
-  // Vaciar carrito
+  
   const clearCart = () => {
     setCartItems([]);
+  };
+
+    const handleLogin = (userData) => {
+    setUser(userData);
+    alert(`Bienvenido, ${userData.email}`);
+    setShowLogin(false);
   };
 
   return (
@@ -33,7 +40,10 @@ function App() {
         <Route path="/cart" element={<Cart items={cartItems} clearCart={clearCart} />} />
       </Routes>
 
-      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+      {showLogin && <LoginModal 
+        onClose={() => setShowLogin(false)}
+        onLogin={handleLogin} 
+        />}
     </Router>
   );
 }

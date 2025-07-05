@@ -1,56 +1,59 @@
-import { useEffect } from "react";
+import { useState } from "react";
+import "./LoginModal.css"; // Para estilos básicos
 
-function LoginModal({ onClose }) {
-  useEffect(() => {
-    const modal = new bootstrap.Modal(document.getElementById("loginModal"));
-    modal.show();
+function LoginModal({ onClose, onLogin }) {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-    const handleClose = () => {
-      modal.hide();
-      onClose();
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setError("");
 
-    const modalElement = document.getElementById("loginModal");
-    modalElement.addEventListener("hidden.bs.modal", handleClose);
+    if (!email || !password) {
+      setError("Todos los campos son obligatorios.");
+      return;
+    }
 
-    return () => {
-      modalElement.removeEventListener("hidden.bs.modal", handleClose);
-    };
-  }, [onClose]);
+    setLoading(true);
+
+    // Simulación de backend con 1.5 segundos de delay
+    setTimeout(() => {
+      setLoading(false);
+
+      // Simulación de login exitoso
+      if (email === "admin@demo.com" && password === "123456") {
+        onLogin({ email });
+      } else {
+        setError("Credenciales inválidas.");
+      }
+    }, 1500);
+  };
 
   return (
-    <div
-      className="modal fade"
-      id="loginModal"
-      tabIndex="-1"
-      aria-labelledby="loginModalLabel"
-      aria-hidden="true"
-    >
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title" id="loginModalLabel">Iniciar Sesión</h5>
-            <button
-              type="button"
-              className="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Cerrar"
-            ></button>
-          </div>
-          <div className="modal-body">
-            <form>
-              <div className="mb-3">
-                <label htmlFor="email" className="form-label">Correo Electrónico</label>
-                <input type="email" className="form-control" id="email" required />
-              </div>
-              <div className="mb-3">
-                <label htmlFor="password" className="form-label">Contraseña</label>
-                <input type="password" className="form-control" id="password" required />
-              </div>
-              <button type="submit" className="btn btn-primary w-100">Ingresar</button>
-            </form>
-          </div>
-        </div>
+    <div className="login-modal-backdrop">
+      <div className="login-modal">
+        <button className="close-btn" onClick={onClose}>×</button>
+        <h2>Iniciar Sesión</h2>
+        <form onSubmit={handleSubmit}>
+          <input
+            type="email"
+            placeholder="Correo electrónico"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit" disabled={loading}>
+            {loading ? "Ingresando..." : "Ingresar"}
+          </button>
+          {error && <p className="error">{error}</p>}
+        </form>
       </div>
     </div>
   );
