@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 function NavBar({ onLoginClick, cartCount }) {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-dark px-4">
-      <Link className="navbar-brand" to="/">Tienda</Link>
+      <Link className="navbar-brand" to="/">&copy;Tienda Talento 2025 </Link>
 
       <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
         <span className="navbar-toggler-icon"></span>
@@ -19,6 +19,7 @@ function NavBar({ onLoginClick, cartCount }) {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/cart">
+              <span className="cart-badge">🛒 </span>
               Carrito <span className="badge bg-light text-dark">{cartCount}</span>
             </Link>
           </li>
@@ -31,4 +32,4 @@ function NavBar({ onLoginClick, cartCount }) {
   );
 }
 
-export default NavBar;
+export default NavBar; 

@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NavBar from "./components/NavBar";
 import Home from "./components/Home";
 import Novedades from "./components/Novedades";
@@ -11,27 +11,41 @@ function App() {
   const [cartItems, setCartItems] = useState([]);
   const [user, setUser] = useState(null);
 
-  
+  // Cargar usuario desde localStorage
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) {
+      setUser(JSON.parse(storedUser));
+    }
+  }, []);
+
   const addToCart = (product) => {
     setCartItems((prevItems) => [...prevItems, product]);
   };
 
-  
   const clearCart = () => {
     setCartItems([]);
   };
 
-    const handleLogin = (userData) => {
+  const handleLogin = (userData) => {
     setUser(userData);
+    localStorage.setItem("user", JSON.stringify(userData));
     alert(`Bienvenido, ${userData.email}`);
     setShowLogin(false);
+  };
+
+  const handleLogout = () => {
+    setUser(null);
+    localStorage.removeItem("user");
   };
 
   return (
     <Router>
       <NavBar
         onLoginClick={() => setShowLogin(true)}
+        onLogoutClick={handleLogout}
         cartCount={cartItems.length}
+        user={user}
       />
 
       <Routes>
@@ -40,10 +54,12 @@ function App() {
         <Route path="/cart" element={<Cart items={cartItems} clearCart={clearCart} />} />
       </Routes>
 
-      {showLogin && <LoginModal 
-        onClose={() => setShowLogin(false)}
-        onLogin={handleLogin} 
-        />}
+      {showLogin && (
+        <LoginModal
+          onClose={() => setShowLogin(false)}
+          onLogin={handleLogin}
+        />
+      )}
     </Router>
   );
 }

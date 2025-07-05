@@ -57,6 +57,12 @@
   cursor: pointer;
 }
 
+#credenciales{
+color: red;
+font-style: italic;
+font-size: small;
+}
+
 .error {
   color: red;
   font-size: 0.9rem;

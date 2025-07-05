@@ -36,6 +36,8 @@ function LoginModal({ onClose, onLogin }) {
       <div className="login-modal">
         <button className="close-btn" onClick={onClose}>×</button>
         <h2>Iniciar Sesión</h2>
+        <h6 id="credenciales">(admin@demo.com / 123456)</h6>
+
         <form onSubmit={handleSubmit}>
           <input
             type="email"
