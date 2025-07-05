@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./LoginModal.css"; // Reutilizamos el mismo estilo visual del login
+import "./LoginModal.css"; // Estilo modal compartido
 
 const ProductFormModal = ({ onSubmit, onClose }) => {
   const [nombre, setNombre] = useState("");
@@ -9,6 +9,7 @@ const ProductFormModal = ({ onSubmit, onClose }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     if (!nombre || !descripcion || !precio) return;
 
     const nuevoProducto = {
@@ -30,41 +31,64 @@ const ProductFormModal = ({ onSubmit, onClose }) => {
     <div className="login-modal-backdrop">
       <div className="login-modal">
         <button className="close-btn" onClick={onClose}>×</button>
-        <h2>Agregar Producto Personalizado</h2>
+        <h4 className="mb-4">Agregar Producto Personalizado</h4>
 
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Nombre del producto"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            required
-          />
-          <textarea
-            placeholder="Descripción"
-            value={descripcion}
-            onChange={(e) => setDescripcion(e.target.value)}
-            rows={3}
-            required
-          />
-          <input
-            type="number"
-            placeholder="Precio"
-            step="0.01"
-            value={precio}
-            onChange={(e) => setPrecio(e.target.value)}
-            required
-          />
-          <input
-            type="text"
-            placeholder="URL de imagen (opcional)"
-            value={imagen}
-            onChange={(e) => setImagen(e.target.value)}
-          />
+          <div className="mb-3">
+            <label className="form-label">Nombre del producto</label>
+            <input
+              type="text"
+              className="form-control"
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
+              placeholder="Ej: Cafetera digital"
+              required
+            />
+          </div>
 
-          <div className="d-flex gap-2 mt-3">
-            <button type="submit" className="btn btn-success w-100">Aceptar</button>
-            <button type="button" className="btn btn-secondary w-100" onClick={onClose}>Cancelar</button>
+          <div className="mb-3">
+            <label className="form-label">Descripción</label>
+            <textarea
+              className="form-control"
+              rows="3"
+              value={descripcion}
+              onChange={(e) => setDescripcion(e.target.value)}
+              placeholder="Describe brevemente el producto..."
+              required
+            ></textarea>
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Precio</label>
+            <input
+              type="number"
+              className="form-control"
+              step="0.01"
+              value={precio}
+              onChange={(e) => setPrecio(e.target.value)}
+              placeholder="Ej: 1499.99"
+              required
+            />
+          </div>
+
+          <div className="mb-4">
+            <label className="form-label">URL de imagen (opcional)</label>
+            <input
+              type="text"
+              className="form-control"
+              value={imagen}
+              onChange={(e) => setImagen(e.target.value)}
+              placeholder="https://misimagenes.com/foto.png"
+            />
+          </div>
+
+          <div className="d-flex justify-content-between">
+            <button type="submit" className="btn btn-success w-50 me-2">
+              Aceptar
+            </button>
+            <button type="button" className="btn btn-secondary w-50" onClick={onClose}>
+              Cancelar
+            </button>
           </div>
         </form>
       </div>

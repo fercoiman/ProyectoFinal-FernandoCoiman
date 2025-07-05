@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
+import Swal from 'sweetalert2';
 
 function Cart({ items, clearCart }) {
   const total = items.reduce((sum, item) => sum + item.price, 0);
 
-  const handleCheckout = () => {
-    alert("¡Compra finalizada!");
-    clearCart();
-  };
+const handleCheckout = () => {
+  Swal.fire({
+    icon: 'success',
+    title: '¡Compra finalizada!',
+    text: 'Gracias por tu compra. Pronto recibirás la confirmación por correo.',
+    confirmButtonText: 'Aceptar',
+  });
+
+  clearCart();
+};
+
+
 
   return (
     <div className="container py-4">
